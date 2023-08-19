@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
+import Link from 'next/link';
 
 
 export default function Login() {
@@ -40,6 +41,7 @@ export default function Login() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -48,12 +50,15 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Login
         </Button>
-       
+        <Button variant="primary" className='ms-2'>
+          <Link href="/register" className='text-light text-decoration-none '>REGISTER</Link>
+        </Button>
       </Form>
     </Container>
   );
