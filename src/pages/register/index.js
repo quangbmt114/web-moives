@@ -19,7 +19,7 @@ export default function Register() {
         fullname,
         email,
       });
-
+      console.log(response);
       // Handle response as needed, e.g. redirect to login page
     } catch (error) {
       console.error('Registration failed:', error);

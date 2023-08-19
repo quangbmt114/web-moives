@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { useRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import Link from 'next/link';
+
 
 
 export default function Login() {
@@ -14,6 +15,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+     
     try {
       const response = await axios.post('/api/login', {
         username,
@@ -30,7 +32,14 @@ export default function Login() {
       console.error('Login failed:', error);
     }
   };
-
+  const handleListAccount = async()=>{
+    const data = await axios.get('/api/db')
+    console.log(data);
+  }
+useEffect(() => {
+  handleListAccount();
+ 
+}, []);
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Form onSubmit={handleSubmit} className="border p-4 rounded">

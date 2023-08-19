@@ -1,5 +1,15 @@
-export default function handler ( req,res){
-        if(req.method==='POST'){
-            console.log(req.body);
-        }
+
+import { MongoClient } from 'mongodb';
+export default async function handler(req, res) {
+  if (req.method === "POST") {
+    const getForm = req.body;
+    const client = await MongoClient.connect(
+        "mongodb+srv://quangnv1509:nDtWtSINkSZbxbEP@dhome.qvvod45.mongodb.net/web_movies?retryWrites=true&w=majority"
+      );
+      const db = client.db();
+      const data = db.collection("movies");
+      const result = await data.insertOne(getForm);
+      console.log(result);
+      client.close();
+  }
 }

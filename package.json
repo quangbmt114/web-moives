@@ -9,16 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.1.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
     "cookie": "^0.5.0",
     "jsonwebtoken": "^9.0.1",
+    "mongodb": "^5.7.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.0",
     "next": "13.4.19",
+    "next-connect": "^1.0.0",
     "node-fetch": "^2.6.13",
     "react": "18.2.0",
     "react-bootstrap": "^2.8.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sequelize": "^6.32.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.1.1"
   }
 }
