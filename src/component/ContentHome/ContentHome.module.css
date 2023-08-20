@@ -1,0 +1,29 @@
+.slideContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0; /* Ẩn chữ nền ban đầu */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .slide:hover .slideContent {
+    opacity: 1; /* Hiện chữ nền khi hover vào slide */
+  }
+  .slideContainer {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  .slide {
+    flex: 0 0 100%;
+  }
+  
+  .slide img {
+    width: 100%;
+    height: auto;
+  }

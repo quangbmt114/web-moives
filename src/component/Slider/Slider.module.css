@@ -1,0 +1,72 @@
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+
+
+    position: relative;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  .slideContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0; /* Ẩn chữ nền ban đầu */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .slide:hover .slideContent {
+    opacity: 1; /* Hiện chữ nền khi hover vào slide */
+  }
+  .slideContainer {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .slide {
+    flex: 0 0 100%;
+  }
+  
+  .slide img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .prevBtn,
+  .nextBtn {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .prevBtn:hover {
+    background-color: #555;
+  }
+  .nextBtn:hover {
+    background-color: #555;
+  }
+  
+  .prevBtn {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  
+  .nextBtn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+  
