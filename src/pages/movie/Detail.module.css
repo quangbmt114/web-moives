@@ -1,0 +1,17 @@
+.bg{
+    background-attachment: fixed;
+    background-blend-mode: darken;
+    background-color: rgba(0,0,0,.68);
+    background-position: 0 0;
+    background-size: contain;
+    height: 500px;
+    width: 100%;
+    position: relative;
+}
+.inner-bg{
+    color: white;
+    position: absolute;
+    bottom: 2%;
+    left: 10%;
+    padding-right: 10%;
+}

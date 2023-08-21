@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./ContentHome.module.css";
+import Link from "next/link";
 function Movies() {
   const axios = require("axios");
   const [data, setData] = useState([]);
@@ -32,7 +33,9 @@ function Movies() {
     <div className="d-flex flex-wrap gap-3 justify-content-around col-12 p-3">
       {data.map((item) => {
         return (
-          <div className="card bg-dark text-white col-3 " key={item.id}>
+          
+            <div className="card bg-dark text-white col-3 " key={item.id}>
+              <Link href={`/movie/${item.id}`}>
             <div className={styles.slide}>
               <img
                 src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
@@ -44,7 +47,9 @@ function Movies() {
                 <p>{item.original_title}</p>
               </div>
             </div>
+            </Link>
           </div>
+         
         );
       })}
     </div>
