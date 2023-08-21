@@ -34,7 +34,7 @@ function Movies() {
       {data.map((item) => {
         return (
           
-            <div className="card bg-dark text-white col-3 " key={item.id}>
+            <div className="card  col-2 " key={item.id}>
               <Link href={`/movie/${item.id}`}>
             <div className={styles.slide}>
               <img

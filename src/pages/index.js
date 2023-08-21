@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Slider from "@/component/Slider";
 import Movies from "@/component/ContentHome";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
       </Head>
       <main>
-        <div className="mt-5 p-3">
+        <div className="mt-5 p-3 col-lg-12 col-md-12">
           <Slider />
           <Movies/>
         </div>

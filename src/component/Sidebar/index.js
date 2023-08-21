@@ -37,8 +37,8 @@ function Sidebar() {
   }
   if (movieTrending) {
     return (
-      <div className="col-3 mt-5 pt-3">
-        <h2>Top Trending</h2>
+      <div className="col-lg-3 col-md-9 mt-5 pt-3">
+        <h2 className="fs-3 fw-bold mb-2">Top Trending</h2>
         {movieTrending
           .filter((_, index) => index < 6)
           .map((item) => (
