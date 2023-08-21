@@ -17,7 +17,7 @@ function Header() {
         data-bs-theme="light"
       >
         <Container>
-          <Navbar.Brand href="/">Navbar scroll</Navbar.Brand>
+          <Navbar.Brand href="/"><img src="/movie-32px.png"/></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -25,20 +25,24 @@ function Header() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+              <Nav.Link href="#">Phim mới</Nav.Link>
+              <NavDropdown title="Thể loại" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="#action3">Tình cảm</NavDropdown.Item>
+                <NavDropdown.Item href="#action3">Hài hước</NavDropdown.Item>
+                <NavDropdown.Item href="#action3">Tâm lý</NavDropdown.Item>
+                <NavDropdown.Item href="#action3">Viễn tưởng</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
+                 Hành động
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#" disabled>
-                Link
+              <Nav.Link href="#" >
+                Phim Bộ
+              </Nav.Link>
+              <Nav.Link href="#" >
+                Phim Lẻ
+              </Nav.Link>
+              <Nav.Link href="#" >
+                Phim Chiếu Rạp
               </Nav.Link>
             </Nav>
             <Nav>

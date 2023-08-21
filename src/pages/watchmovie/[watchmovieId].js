@@ -1,12 +1,9 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
-import classes from "./Detail.module.css";
 import { useState, useEffect } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import {  Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlay,
-  faAngleDown,
+  faServer,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import SlideMovie from "@/component/Movie/slideMovie";
@@ -15,13 +12,15 @@ function DetailPage() {
   const router = useRouter();
   const [movie, setMovie] = useState({});
   const [gender, setGender] = useState([]);
-  const [similar,setSimilar]=useState([])
-  const id = router.query.movieId
+  const [similar, setSimilar] = useState([]);
+  const [video, setVideo] = useState([]);
+  const [active_key, setActive_key] = useState(0);
+  const id = router.query.watchmovieId;
 
   const getAPI = async () => {
     const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/movie/${router.query.movieId}?language=en-US&append_to_response=videos,credits,similar`,
+      url: `https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=videos,credits,similar`,
       headers: {
         accept: "application/json",
         Authorization:
@@ -33,18 +32,17 @@ function DetailPage() {
       .then(function (response) {
         setMovie(response.data);
         setGender(response.data.genres);
-        setSimilar(response.data.credits.cast)
+        setSimilar(response.data.credits.cast);
+        setVideo(response.data.videos);
       })
       .catch(function (error) {
         console.error(error);
       });
   };
   useEffect(() => {
-
     setTimeout(() => {
       getAPI();
     }, 2000);
- 
   }, []);
   if (gender.length === 0) {
     return (
@@ -56,63 +54,36 @@ function DetailPage() {
   } else {
     return (
       <div className="mt-5 p-3 container-fluid">
-        <div
-          className={classes.bg}
-          style={{
-            backgroundImage: `URL(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`,
-          }}
-        >
-          <div className={"mb-3 " + classes["inner-bg"]}>
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img
-                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                  className="img-fluid rounded-start w-75"
-                  alt="..."
-                />
-              </div>
-              <div className={"col-md-8 "}>
-                <div className="card-body">
-                  <h3 className="card-title">{movie.title}</h3>
-                  <br />
-                  <h5 className="card-title">
-                    {gender.map((item, index) => (
-                      <span key={index}> {item.name} |</span>
-                    ))}
-                    <span>run time: {movie.runtime}'</span>
-                  </h5>
-
-                  <h5 className="card-title"> run time: {movie.runtime}'</h5>
-                  <div className="header_info">
-                    <h3 className="my-2 text-white" dir="auto">
-                      Overview
-                    </h3>
-                    <div className="overview text-white text-sm" dir="auto">
-                      <p>{movie.overview}</p>
-                    </div>
-                  </div>
-                  <div className="card-text">
-                    <small className="text-muted">
-                      {" "}
-                      <div className="button-watch">
-                        <button className="btn btn-success">
-                          <Link className="episode-movie text-light" href={"/"}>
-                            <FontAwesomeIcon icon={faAngleDown} /> Trailer
-                          </Link>
-                        </button>
-                        <Button className="btn-success ms-2">
-                          <Link className="text-light" href={`/watchmovie/${id}`}>
-                            <FontAwesomeIcon icon={faPlay} /> Xem phim
-                          </Link>
-                        </Button>
-                      </div>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {console.log("video", video)}
+        <section className="col-12" style={{ height: "500px" }}>
+          <iframe
+            className="w-100 h-100"
+            src={`https://www.youtube.com/embed/${video.results[active_key].key}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="Embedded youtube"
+          />
+        </section>
+        <section className="mt-3">
+          <span className="col-12 bg-secondary p-2 rounded-2">
+            <span className="hl-server "></span>
+            <FontAwesomeIcon icon={faServer} /> Server #1
+          </span>
+          <ul className="pagination pagination-lg flex-wrap justify-content-start mt-3 ps-3">
+            {video.results.reverse().map((result, index) => (
+              <li
+                className="page-item col-1 btn-primary btn m-1"
+                onClick={() => {
+                  setActive_key(index);
+                }}
+              >
+                <a>
+                  <span className="">{index + 1}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
         <section>
           <h2 className="p-2">Credits</h2>
           <div className="col-12 p-2 mt-2 d-flex justify-content-around gap-1 card-body">
@@ -124,6 +95,7 @@ function DetailPage() {
           </div>
           <hr />
           <div className="col-12 justify-content-between d-lg-flex">
+            {console.log("movie", movie)}
             <div className="col-4 p-2">
               <span className="fs-5">
                 {" "}
@@ -170,8 +142,10 @@ function DetailPage() {
             </div>
             <div className="des-content-movie bg-slate-300 bg-secondary ">
               <div className="section-title">
-                <span className="text-xl m-3 fs-4 fw-bold text-light">Nội dung phim</span>
-                <hr className="m-3"/>
+                <span className="text-xl m-3 fs-4 fw-bold text-light">
+                  Nội dung phim
+                </span>
+                <hr className="m-3" />
               </div>
               <p className=" m-3 text-light">{movie.overview}</p>
             </div>
