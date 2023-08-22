@@ -4,6 +4,8 @@ import classes from "./Detail.module.css";
 import { useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 import {
   faPlay,
   faAngleDown,
@@ -16,19 +18,21 @@ function DetailPage() {
   const [movie, setMovie] = useState({});
   const [gender, setGender] = useState([]);
   const [similar,setSimilar]=useState([])
-  const id = router.query.movieId
+  const { movieId } = router.query;
 
   const getAPI = async () => {
-    const options = {
-      method: "GET",
-      url: `https://api.themoviedb.org/3/movie/${router.query.movieId}?language=en-US&append_to_response=videos,credits,similar`,
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM",
-      },
-    };
-    await axios
+   
+    if(+movieId>0){
+      const options =  {
+        method: "GET",
+        url: `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=videos,credits,similar`,
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM",
+        },
+      };
+      await axios
       .request(options)
       .then(function (response) {
         setMovie(response.data);
@@ -38,14 +42,12 @@ function DetailPage() {
       .catch(function (error) {
         console.error(error);
       });
+    }
+    
   };
   useEffect(() => {
-
-    setTimeout(() => {
       getAPI();
-    }, 2000);
- 
-  }, []);
+  }, [movieId]);
   if (gender.length === 0) {
     return (
       <div className="d-flex m-5 p-5">
@@ -96,12 +98,12 @@ function DetailPage() {
                       {" "}
                       <div className="button-watch">
                         <button className="btn btn-success">
-                          <Link className="episode-movie text-light" href={"/"}>
+                          <Link className="episode-movie text-light" href={`/watchmovie/${movieId}`}>
                             <FontAwesomeIcon icon={faAngleDown} /> Trailer
                           </Link>
                         </button>
                         <Button className="btn-success ms-2">
-                          <Link className="text-light" href={`/watchmovie/${id}`}>
+                          <Link className="text-light" href={`/watchmovie/${movieId}`}>
                             <FontAwesomeIcon icon={faPlay} /> Xem phim
                           </Link>
                         </Button>
@@ -156,15 +158,17 @@ function DetailPage() {
               <span className="fs-5">
                 {" "}
                 <b>Điểm đánh giá: </b>
-                {Math.floor(movie.vote_average, 2)}{" "}
+                <Stack spacing={1}>
+                      <Rating name="half-rating-read" defaultValue={+movie.vote_average/2} precision={0.5} readOnly />
+                 </Stack>
               </span>
               <br />
             </div>
           </div>
           <div className="check-calendar card  col-12 mt-4">
             <div className="showtime_movies d-flex justify-content-center align-items-center bg-success bg-gradient">
-              <p className="p-3 m-0 fw-bold">
-                <img src="/calendar.png" /> PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG
+              <p className="p-3 m-0 fw-bold d-flex">
+                <img src="/calendar.png" className="me-2" /> PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG
                 TUẦN
               </p>
             </div>

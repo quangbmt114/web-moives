@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-
+import { useDispatch } from 'react-redux';
+import { uiAction } from '@/store/store_login';
 export default function Register() {
+const dispatch = useDispatch()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
-
+useEffect(() => {
+    dispatch(uiAction.toggleOutSideBar())
+}, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,9 +36,9 @@ export default function Register() {
     setEmail('');
   };
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100 ">
-      <Form onSubmit={handleSubmit} className="border p-4 rounded col-4 mb-4 align-content-center">
-        <h1 className="">Register</h1>
+    <Container className=" d-flex flex-wrap justify-content-center align-items-center vh-100 ">
+      <Form onSubmit={handleSubmit} className="border col-lg-6 col-md-9 col-sm-12   p-4 rounded mb-4 align-content-center">
+        <h1 className="fs-2 fw-bold p-2">Register</h1>
         <Form.Group className="mb-3">
         <Form.Label>UserName</Form.Label>
           <Form.Control
@@ -42,6 +46,7 @@ export default function Register() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            autoComplete="current-username"
             required
           />
         </Form.Group>
@@ -52,6 +57,7 @@ export default function Register() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             required
           />
         </Form.Group>
@@ -65,7 +71,7 @@ export default function Register() {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3 ">
         <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
@@ -75,10 +81,10 @@ export default function Register() {
             required
           />
         </Form.Group>
-        <Button variant="success" type="submit">
+        <Button variant="outline-success" type="submit">
           Register
         </Button>
-        <Button variant="primary" onClick={handleReset} type="reset" className='ms-2'>
+        <Button variant="outline-primary" onClick={handleReset} type="reset" className='ms-2'>
           Reset
         </Button>
       </Form>
