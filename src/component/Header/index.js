@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PopupAccount from "../Popup_Account";
@@ -16,10 +15,12 @@ import Tippy from "@tippyjs/react/headless";
 import { Wrapper } from "./Propper";
 import styles from "./Propper/Popper.module.css";
 import SearchAccount from "./SearchAccount";
+import GenesMovies from "./GenesMovies";
 
 const axios = require("axios");
 function Header({ isCheck }) {
   const router = useRouter();
+  const [listMovies,setListMovies]=useState([])
   const [search, setSearch] = useState("");
   const [searchMovie, setSearchMovie] = useState([]);
   const [open, setOpen] = useState(false);
@@ -50,8 +51,29 @@ function Header({ isCheck }) {
         console.error(error);
       });
   };
+  const getListMovie = () => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/genre/movie/list?language=en`,
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        setListMovies(response.data.genres);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
   useEffect(() => {
     getAPI();
+    getListMovie()
   }, [search]);
   return (
     <Navbar
@@ -72,10 +94,10 @@ function Header({ isCheck }) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            
-            <Nav.Link href="/">Phim Bộ</Nav.Link>
-            <Nav.Link href="#">Phim Lẻ</Nav.Link>
-            <Nav.Link href="#">Phim Chiếu Rạp</Nav.Link>
+            <GenesMovies dataMovies={listMovies}/>
+            <Link href="/dang-chieu" className="p-1 text-[#1976d2] font-medium ">Đang chiếu</Link>
+            <Link href="/sap-chieu" className="p-1 text-[#1976d2] font-medium">Phim Sắp chiếu</Link>
+            <Link href="/pho-bien" className="p-1 text-[#1976d2] font-medium">Phim Phổ Biến</Link>
           </Nav>
           <Nav className="col-lg-5 col-md-12">
             <Form className="d-flex col-12 relative">
