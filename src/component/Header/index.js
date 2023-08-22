@@ -10,19 +10,49 @@ import PopupAccount from "../Popup_Account";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import BasicModal from "../Popup_Account/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import React from "react";
+import Tippy from "@tippyjs/react/headless";
+import { Wrapper } from "./Propper";
+import styles from "./Propper/Popper.module.css";
+import SearchAccount from "./SearchAccount";
 
-function Header({isCheck}) {
-  const router = useRouter()
-  const [open,setOpen]=useState(false)
-  const handleReload=()=>{
-      setOpen(true)
-  }
-  const handleRemoveCookie = ()=>{
-    handleReload()
-        Cookies.remove('token')
-        
-  }
+const axios = require("axios");
+function Header({ isCheck }) {
+  const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [searchMovie, setSearchMovie] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleReload = () => {
+    setOpen(true);
+  };
+  const handleRemoveCookie = () => {
+    handleReload();
+    Cookies.remove("token");
+  };
+  const getAPI = () => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=1`,
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        setSearchMovie(response.data.results);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    getAPI();
+  }, [search]);
   return (
     <Navbar
       fixed="top"
@@ -42,35 +72,58 @@ function Header({isCheck}) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#">Phim mới</Nav.Link>
-            <NavDropdown title="Thể loại" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Tình cảm</NavDropdown.Item>
-              <NavDropdown.Item href="#action3">Hài hước</NavDropdown.Item>
-              <NavDropdown.Item href="#action3">Tâm lý</NavDropdown.Item>
-              <NavDropdown.Item href="#action3">Viễn tưởng</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">Hành động</NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="#">Phim Bộ</Nav.Link>
+            
+            <Nav.Link href="/">Phim Bộ</Nav.Link>
             <Nav.Link href="#">Phim Lẻ</Nav.Link>
             <Nav.Link href="#">Phim Chiếu Rạp</Nav.Link>
           </Nav>
-          <Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
+          <Nav className="col-lg-5 col-md-12">
+            <Form className="d-flex col-12 relative">
+              <Tippy
+                interactive
+                visible={searchMovie.length > 0}
+                render={(attrs) => (
+                  <div className={styles.box} tabIndex="1" {...attrs}>
+                    <Wrapper>
+                      <h4
+                        className={
+                          styles["search-title"] +
+                          " font-san text-neutral-400 p-2"
+                        }
+                      >
+                        Movies
+                      </h4>
+                      {searchMovie
+                        .filter((_, index) => index < 5)
+                        .map((item, index) => (
+                          <Link href={`/movie/${item.id}`}>
+                            <SearchAccount items={item} key={index} />
+                          </Link>
+                        ))}
+                    </Wrapper>
+                  </div>
+                )}
+              >
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2 w-100"
+                  aria-label="Search"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </Tippy>
+
               <Button variant="outline-success">Search</Button>
             </Form>
+          </Nav>
+          <Nav className="col-lg-1 col-ms-6 m-ms-2">
             {!isCheck && (
               <Button variant="outline-primary" className="ms-2">
                 <Link href="/login">Login</Link>
               </Button>
             )}
-            
-            {isCheck && <PopupAccount  onRemove={handleRemoveCookie} />}
+
+            {isCheck && <PopupAccount onRemove={handleRemoveCookie} />}
           </Nav>
           <BasicModal />
         </Navbar.Collapse>

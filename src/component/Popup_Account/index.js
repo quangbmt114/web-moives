@@ -6,17 +6,19 @@ import { MenuItem, menuItemClasses } from '@mui/base/MenuItem';
 import { styled } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { uiAction } from '@/store/store_login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 export default function PopupAccount({onRemove}) {
     const dispatch = useDispatch()
   const createHandleMenuClick = () => {
-      // dispatch(uiAction.toggleLogout())
+      dispatch(uiAction.toggleLogout())
       onRemove()
   };
 
   return (
     <div className='ml-2'>
       <Dropdown>
-      <TriggerButton>Dashboard</TriggerButton>
+      <TriggerButton><FontAwesomeIcon icon={faUser} /></TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}>
         <StyledMenuItem >
           Profile
