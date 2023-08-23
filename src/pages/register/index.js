@@ -4,8 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { uiAction } from '@/store/store_login';
+import { useRouter } from 'next/router';
 export default function Register() {
 const dispatch = useDispatch()
+const router = useRouter()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullname, setFullname] = useState('');
@@ -23,6 +25,7 @@ useEffect(() => {
         fullname,
         email,
       });
+      router.push('/login')
       console.log(response);
       // Handle response as needed, e.g. redirect to login page
     } catch (error) {
