@@ -95,9 +95,9 @@ function Header({ isCheck }) {
             navbarScroll
           >
             <GenesMovies dataMovies={listMovies}/>
-            <Link href="/dang-chieu" className="p-1 text-[#1976d2] font-medium ">Đang chiếu</Link>
-            <Link href="/sap-chieu" className="p-1 text-[#1976d2] font-medium">Phim Sắp chiếu</Link>
-            <Link href="/pho-bien" className="p-1 text-[#1976d2] font-medium">Phim Phổ Biến</Link>
+            <Link href="/now-playing" className="p-1 text-[#1976d2] font-medium ">Đang chiếu</Link>
+            <Link href="/up-coming" className="p-1 text-[#1976d2] font-medium">Phim Sắp chiếu</Link>
+            <Link href="/popular" className="p-1 text-[#1976d2] font-medium">Phim Phổ Biến</Link>
           </Nav>
           <Nav className="col-lg-5 col-md-12">
             <Form className="d-flex col-12 relative">

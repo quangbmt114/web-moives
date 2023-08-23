@@ -7,17 +7,20 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
+import { useRouter } from 'next/router';
 
 export default function GenesMovies({dataMovies}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [idMovie,setIdMovie]=React.useState(0)
+  const router = useRouter()
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
   const handleRouter = (e)=>{
-        console.log(e);
+        setOpen(false)
+        router.push(`/category/${e}`)
   }
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -85,7 +88,7 @@ export default function GenesMovies({dataMovies}) {
                     onKeyDown={handleListKeyDown}
                   >
                     {dataMovies.map((item,index)=>( 
-                            <MenuItem onClick={()=>handleRouter(item.name)} key={index}>{item.name}</MenuItem>
+                            <MenuItem onClick={()=>handleRouter(item.id)} key={index}>{item.name}</MenuItem>
                     ))}
                   </MenuList>
                 </ClickAwayListener>
