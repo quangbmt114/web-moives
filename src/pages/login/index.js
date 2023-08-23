@@ -20,8 +20,11 @@ export default function Login() {
         password,
       });
       if (response.data.token) {
+        console.log(response.data.userId._id);
+        localStorage.setItem('id',response.data.userId._id)
         document.cookie = `token=${response.data.token}`;
         dispatch(uiAction.toggleLogin())
+        dispatch(uiAction.toggleInSideBar())
         router.push('/'); // Thay thế đường dẫn bằng trang sau khi đăng nhập thành công
       }else{
 

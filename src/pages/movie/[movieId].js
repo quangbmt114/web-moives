@@ -144,7 +144,7 @@ function DetailPage() {
               <span className="fs-5">
                 {" "}
                 <b>Quốc gia: </b>
-                {movie.production_countries[0].name}
+                {movie.production_countries.length>0?movie.production_countries[0].name:''}
               </span>
               <br />
               <span className="fs-5">

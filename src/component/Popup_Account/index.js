@@ -8,19 +8,25 @@ import { useDispatch } from 'react-redux';
 import { uiAction } from '@/store/store_login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 export default function PopupAccount({onRemove}) {
     const dispatch = useDispatch()
+    const router = useRouter()
   const createHandleMenuClick = () => {
       dispatch(uiAction.toggleLogout())
+      localStorage.removeItem('id')
       onRemove()
+      router.push('/login')
   };
-
+  const handleRoutingDashboard = ()=>{
+    router.push('/dashboard')
+  }
   return (
     <div className='ml-2'>
       <Dropdown>
       <TriggerButton><FontAwesomeIcon icon={faUser} /></TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}>
-        <StyledMenuItem >
+        <StyledMenuItem onClick={handleRoutingDashboard}>
           Profile
         </StyledMenuItem>
         <StyledMenuItem >

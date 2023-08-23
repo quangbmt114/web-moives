@@ -32,6 +32,9 @@ function Header({ isCheck }) {
     handleReload();
     Cookies.remove("token");
   };
+  const handleReloadSearch = ()=>{
+      router.push('/search')
+  }
   const getAPI = () => {
     const options = {
       method: "GET",
@@ -137,7 +140,7 @@ function Header({ isCheck }) {
                 />
               </Tippy>
 
-              <Button variant="outline-success">Search</Button>
+              <Button variant="outline-success" onClick={handleReloadSearch}>Search</Button>
             </Form>
           </Nav>
           <Nav className="col-lg-1 col-ms-6 m-ms-2">
