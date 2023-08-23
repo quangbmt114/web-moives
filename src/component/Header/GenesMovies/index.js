@@ -9,7 +9,7 @@ import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/router';
 
-export default function GenesMovies({dataMovies}) {
+export default function GenesMovies({dataMovies,data}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [idMovie,setIdMovie]=React.useState(0)
@@ -20,7 +20,7 @@ export default function GenesMovies({dataMovies}) {
   };
   const handleRouter = (e)=>{
         setOpen(false)
-        router.push(`/category/${e}`)
+        router.push(`/${data}/${data==='category'?e.id:e.name}`)
   }
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -61,7 +61,7 @@ export default function GenesMovies({dataMovies}) {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-         Thể loại
+         {data}
         </Button>
         <Popper
           open={open}
@@ -88,7 +88,7 @@ export default function GenesMovies({dataMovies}) {
                     onKeyDown={handleListKeyDown}
                   >
                     {dataMovies.map((item,index)=>( 
-                            <MenuItem onClick={()=>handleRouter(item.id)} key={index}>{item.name}</MenuItem>
+                            <MenuItem onClick={()=>handleRouter(item)} key={index} className='w-36 d-flex justify-center align-items-start'>{item.name}</MenuItem>
                     ))}
                   </MenuList>
                 </ClickAwayListener>

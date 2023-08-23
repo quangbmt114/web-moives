@@ -27,6 +27,7 @@ function Header({ isCheck }) {
   const handleReload = () => {
     setOpen(true);
   };
+  const dataYear = [{name:2016},{name:2017},{name:2018},{name:2019},{name:2020},{name:2021},{name:2022},{name:2023}]
   const handleRemoveCookie = () => {
     handleReload();
     Cookies.remove("token");
@@ -94,10 +95,11 @@ function Header({ isCheck }) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <GenesMovies dataMovies={listMovies}/>
+            <GenesMovies dataMovies={listMovies} data={'category'}/>
             <Link href="/now-playing" className="p-1 text-[#1976d2] font-medium ">Đang chiếu</Link>
             <Link href="/up-coming" className="p-1 text-[#1976d2] font-medium">Phim Sắp chiếu</Link>
             <Link href="/popular" className="p-1 text-[#1976d2] font-medium">Phim Phổ Biến</Link>
+            <GenesMovies dataMovies={dataYear} data={'year'}/>
           </Nav>
           <Nav className="col-lg-5 col-md-12">
             <Form className="d-flex col-12 relative">
