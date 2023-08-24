@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faServer,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { uiAction } from "@/store/store_login";
 import Cookies from 'js-cookie';
 import Rating from '@mui/material/Rating';
@@ -90,7 +90,7 @@ function DetailPage() {
         <section className="col-12" style={{ height: "500px" }}>
           <iframe
             className="w-100 h-100"
-            src={`https://www.youtube.com/embed/${video.results[active_key].key}`}
+            src={`https://www.youtube.com/embed/${video.results[active_key].length===0?'':video.results[active_key].key}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title="Embedded youtube"
