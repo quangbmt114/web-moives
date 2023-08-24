@@ -1,4 +1,4 @@
-
+import Cookies from 'js-cookie';
 import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
 import {useState,useEffect} from 'react'
 import Stack from '@mui/material/Stack';
@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import styles from '../../../component/ContentHome/ContentHome.module.css'
 function FavoriteMovies() {
+  const accessToken = Cookies.get('token');
     const [data,setData]= useState([])
     //get api
     const axios = require('axios');
@@ -54,7 +55,9 @@ function FavoriteMovies() {
         }
       }
   useEffect(() => {
-    handleGetMovie()
+      if(accessToken){
+        handleGetMovie()
+      }
   }, []);
   if(data.length===0){
     return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>

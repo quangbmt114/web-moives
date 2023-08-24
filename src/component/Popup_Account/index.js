@@ -16,9 +16,11 @@ export default function PopupAccount({onRemove}) {
   const createHandleMenuClick = () => {
     Cookies.remove("token");
       dispatch(uiAction.toggleLogout())
+      dispatch(uiAction.toggleInSideBar())
       localStorage.removeItem('id')
+      localStorage.removeItem('token')
       onRemove()
-      router.reload('/login')
+      router.push('/')
   };
   const handleRoutingDashboard = (e)=>{
     router.push(`${e}`)
