@@ -12,12 +12,10 @@ export default function Dashboard() {
     const phone = useRef()
     const handleData=async()=>{
         const id = localStorage.getItem('id')
-        console.log("data id",id);
         try {
             const response = await axios.get('/api/getData');
             response.data.map(item=>{
                 if(item._id===id){
-                    console.log("check",item);
                     setData([...data,item])
                 }
             })

@@ -18,19 +18,22 @@ export default function PopupAccount({onRemove}) {
       onRemove()
       router.push('/login')
   };
-  const handleRoutingDashboard = ()=>{
-    router.push('/dashboard')
+  const handleRoutingDashboard = (e)=>{
+    router.push(`${e}`)
   }
   return (
     <div className='ml-2'>
       <Dropdown>
       <TriggerButton><FontAwesomeIcon icon={faUser} /></TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}>
-        <StyledMenuItem onClick={handleRoutingDashboard}>
+        <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard')}>
           Profile
         </StyledMenuItem>
-        <StyledMenuItem >
-          My account
+        <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard/favorite')}>
+          Favorite Movies
+        </StyledMenuItem>
+        <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard/favorite')}>
+          Rate Movies
         </StyledMenuItem>
         <StyledMenuItem onClick={createHandleMenuClick}>
           Log out

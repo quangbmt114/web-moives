@@ -1,7 +1,9 @@
 import styles from "../ContentHome/ContentHome.module.css"
+
 function SlideMovie({item}) {
     return (  <div className="col-2 card ">
             <div className={styles.slide}>
+            
               <img
                 src={`https://image.tmdb.org/t/p/w300${item.profile_path}`}
                 className="card-img"

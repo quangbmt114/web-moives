@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import classes from "./Detail.module.css";
 import { useState, useEffect } from "react";
-import { Button, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { Button, Spinner } from "react-bootstrap";
+
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import {
@@ -19,7 +21,27 @@ function DetailPage() {
   const [gender, setGender] = useState([]);
   const [similar,setSimilar]=useState([])
   const { movieId } = router.query;
-
+  const handleBookmark=()=>{
+    const options = {
+      method: 'POST',
+      url: 'https://api.themoviedb.org/3/account/20326391/favorite',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM'
+      },
+      data: {media_type: 'movie', media_id: movieId, favorite: true}
+    };
+    
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
   const getAPI = async () => {
    
     if(+movieId>0){
@@ -67,6 +89,9 @@ function DetailPage() {
           <div className={"mb-3 " + classes["inner-bg"]}>
             <div className="row g-0">
               <div className="col-md-4">
+              <div className={classes['icon-remember']} onClick={handleBookmark}>
+              <FontAwesomeIcon icon={faBookmark} shake size="2xl"/>
+              </div>
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   className="img-fluid rounded-start w-75"

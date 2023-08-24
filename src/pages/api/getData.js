@@ -11,10 +11,7 @@ export default async function handler(req, res) {
       const data = db.collection("movies");
 
       const result = await data.find({}).toArray(); // Lấy tất cả dữ liệu từ cơ sở dữ liệu
-      console.log("Retrieved data:", result);
-
       client.close();
-
       res.status(200).json(result); // Trả về dữ liệu cho yêu cầu GET
     } catch (error) {
       console.error("Error retrieving data:", error);

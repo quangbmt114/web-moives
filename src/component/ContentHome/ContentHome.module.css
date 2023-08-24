@@ -12,7 +12,7 @@
     transition: opacity 0.3s ease-in-out;
   }
   
-  .slide:hover .slideContent {
+  .slide .slideContent {
     opacity: 1; /* Hiện chữ nền khi hover vào slide */
   }
   .slideContainer {
@@ -26,4 +26,10 @@
   .slide img {
     width: 100%;
     height: auto;
+  }
+  .icon-remember{
+    width: 30px;
+    position: absolute;
+    top:5px;
+    left: 10px;
   }
