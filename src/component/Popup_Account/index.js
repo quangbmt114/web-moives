@@ -32,7 +32,7 @@ export default function PopupAccount({onRemove}) {
         <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard/favorite')}>
           Favorite Movies
         </StyledMenuItem>
-        <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard/favorite')}>
+        <StyledMenuItem onClick={()=>handleRoutingDashboard('/dashboard/rating')}>
           Rate Movies
         </StyledMenuItem>
         <StyledMenuItem onClick={createHandleMenuClick}>
