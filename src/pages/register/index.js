@@ -25,8 +25,10 @@ useEffect(() => {
         fullname,
         email,
       });
-      router.push('/login')
+      if(response.data){
+        router.push('/login')
       console.log(response);
+      }
       // Handle response as needed, e.g. redirect to login page
     } catch (error) {
       console.error('Registration failed:', error);

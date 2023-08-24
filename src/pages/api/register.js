@@ -9,6 +9,7 @@ export default async function handler(req, res) {
       const db = client.db();
       const data = db.collection("movies");
       const result = await data.insertOne(getForm);
+      res.status(200).json({ message: "Request processed successfully" });
       console.log(result);
       client.close();
   }
