@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Cookies from "js-cookie";
 import { Dropdown } from '@mui/base/Dropdown';
 import { Menu } from '@mui/base/Menu';
 import { MenuButton } from '@mui/base/MenuButton';
@@ -13,6 +14,7 @@ export default function PopupAccount({onRemove}) {
     const dispatch = useDispatch()
     const router = useRouter()
   const createHandleMenuClick = () => {
+    Cookies.remove("token");
       dispatch(uiAction.toggleLogout())
       localStorage.removeItem('id')
       onRemove()

@@ -5,10 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faServer,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { uiAction } from "@/store/store_login";
+import Cookies from 'js-cookie';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 import axios from "axios";
 import SlideMovie from "@/component/Movie/slideMovie";
+import HoverRating from "@/component/rating";
 
 function DetailPage() {
+  const accessToken = Cookies.get('token');
+  const dispatch = useDispatch();
+  const isCheck = useSelector(state=>state.ui.isCheckLogin)
   const router = useRouter();
   const [movie, setMovie] = useState({});
   const [gender, setGender] = useState([]);
@@ -39,11 +48,35 @@ function DetailPage() {
         console.error(error);
       });
   };
+  const PostRating = (e)=>{
+    const options = {
+      method: 'POST',
+      url: `https://api.themoviedb.org/3/movie/${id}/rating`,
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM'
+      },
+      data: `{"value":${e}}`
+    };
+    
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
   useEffect(() => {
+    if(accessToken){
+      dispatch(uiAction.toggleLogin())
+  }
     setTimeout(() => {
       getAPI();
     }, 2000);
-  }, []);
+  }, [id]);
   if (gender.length === 0) {
     return (
       <div className="d-flex m-5 p-5">
@@ -54,7 +87,6 @@ function DetailPage() {
   } else {
     return (
       <div className="mt-5 p-3 container-fluid">
-        {console.log("video", video)}
         <section className="col-12" style={{ height: "500px" }}>
           <iframe
             className="w-100 h-100"
@@ -71,7 +103,7 @@ function DetailPage() {
           </span>
           <ul className="pagination pagination-lg flex-wrap justify-content-start mt-3 ps-3">
             {video.results.reverse().map((result, index) => (
-              <li
+              <li key={index}
                 className="page-item col-1 btn-primary btn m-1"
                 onClick={() => {
                   setActive_key(index);
@@ -93,9 +125,10 @@ function DetailPage() {
                 <SlideMovie item={item} key={index} />
               ))}
           </div>
-          <hr />
+          <hr/>
+            {isCheck&&<HoverRating onGetRating={PostRating}/>}
+
           <div className="col-12 justify-content-between d-lg-flex">
-            {console.log("movie", movie)}
             <div className="col-4 p-2">
               <span className="fs-5">
                 {" "}
@@ -128,15 +161,17 @@ function DetailPage() {
               <span className="fs-5">
                 {" "}
                 <b>Điểm đánh giá: </b>
-                {Math.floor(movie.vote_average, 2)}{" "}
+                <Stack spacing={1}>
+                      <Rating name="half-rating-read" defaultValue={+movie.vote_average/2} precision={0.5} readOnly />
+                 </Stack>
               </span>
               <br />
             </div>
           </div>
           <div className="check-calendar card  col-12 mt-4">
             <div className="showtime_movies d-flex justify-content-center align-items-center bg-success bg-gradient">
-              <p className="p-3 m-0 fw-bold">
-                <img src="/calendar.png" /> PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG
+              <p className="p-3 m-0 fw-bold d-flex">
+                <img src="/calendar.png" className="pr-2"/>  PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG
                 TUẦN
               </p>
             </div>

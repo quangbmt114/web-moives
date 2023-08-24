@@ -1,5 +1,7 @@
 import Pagination from '@/component/Pagination';
 import {useState,useEffect} from 'react'
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import styles from '../../component/ContentHome/ContentHome.module.css'
 function Popular() {
@@ -17,7 +19,6 @@ function Popular() {
               Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTkwMTA5MmZkYzg0ZWJiNmUwYmMyZmVmNjZkODljOCIsInN1YiI6IjY0ZTE4MTMyZGE5ZWYyMDEwMjMyZGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RvcKF0YAMLumRPlx3u01NaN_NeG-uBmstl41QXEVwvM'
             }
           };
-          
           axios
             .request(options)
             .then(function (response) {
@@ -26,13 +27,18 @@ function Popular() {
             .catch(function (error) {
               console.error(error);
             });
-        
-        
     }
 
   useEffect(() => {
     handleGetMovie()
   }, []);
+  if(data.length===0){
+    return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>
+      <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row" >
+  <CircularProgress color="success" />
+  </Stack>
+    </div>)
+  }else{
     return ( <div className="mt-5">
         <div className="d-flex flex-wrap gap-3 justify-content-around col-12 p-3">
       {data.map((item) => {
@@ -58,6 +64,8 @@ function Popular() {
     </div>
         <Pagination onReload={handleGetMovie}/>
     </div> );
+  }
+    
 }
 
 export default Popular;

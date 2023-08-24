@@ -1,6 +1,6 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
+import CircularProgress from '@mui/material/CircularProgress';
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Link from "next/link";
@@ -47,7 +47,6 @@ function HomeSearch() {
           axios
             .request(options)
             .then(function (response) {
-              console.log(response.data.results);
               setListSearch(response.data.results);
             })
             .catch(function (error) {
@@ -67,7 +66,6 @@ function HomeSearch() {
           axios
             .request(options)
             .then(function (response) {
-              console.log(response.data.results);
               setListSearch(response.data.results);
             })
             .catch(function (error) {
@@ -86,15 +84,19 @@ function HomeSearch() {
   };
   const handleGetYear = (e) => {
     setYear(e);
-    console.log("year", e);
   };
-
+  if(listSearch.length===0){
+    return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>
+    <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row" >
+<CircularProgress color="success" />
+</Stack>
+  </div>)
+  }else{
   return (
     <div className="mt-5 pt-5 col-auto">
       <Stack spacing={2} direction="row">
         <SelectCategory dataCategory={listMovies} onReload={handleGetData} />
         <SelectYear onReload={handleGetYear} />
-        <TextField id="outlined-basic" label="name movie" variant="outlined" />
         <Button variant="outlined" onClick={getListSearch}>
           SEARCH
         </Button>
@@ -126,6 +128,7 @@ function HomeSearch() {
       </div>
     </div>
   );
+          }
 }
 
 export default HomeSearch;

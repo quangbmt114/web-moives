@@ -1,13 +1,16 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
 import classes from "./Detail.module.css";
+import Stack from '@mui/material/Stack';
+import Cookies from 'js-cookie';
+import { uiAction } from "@/store/store_login";
+import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
-import { Button, Spinner } from "react-bootstrap";
-
+import { Button } from "react-bootstrap";
 import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import {
   faPlay,
   faAngleDown,
@@ -16,6 +19,9 @@ import axios from "axios";
 import SlideMovie from "@/component/Movie/slideMovie";
 
 function DetailPage() {
+  const accessToken = Cookies.get('token');
+  const dispatch = useDispatch();
+  const isCheck = useSelector(state=>state.ui.isCheckLogin)
   const router = useRouter();
   const [movie, setMovie] = useState({});
   const [gender, setGender] = useState([]);
@@ -68,15 +74,17 @@ function DetailPage() {
     
   };
   useEffect(() => {
+    if(accessToken){
+      dispatch(uiAction.toggleLogin())
+  }
       getAPI();
   }, [movieId]);
   if (gender.length === 0) {
-    return (
-      <div className="d-flex m-5 p-5">
-        <Spinner animation="border" role="status"></Spinner>
-        <span className="visually-primary">Loading...</span>
-      </div>
-    );
+    return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>
+    <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row" >
+<CircularProgress color="success" />
+</Stack>
+  </div>)
   } else {
     return (
       <div className="mt-5 p-3 container-fluid">
@@ -89,9 +97,9 @@ function DetailPage() {
           <div className={"mb-3 " + classes["inner-bg"]}>
             <div className="row g-0">
               <div className="col-md-4">
-              <div className={classes['icon-remember']} onClick={handleBookmark}>
+              {isCheck&&<div className={classes['icon-remember']} onClick={handleBookmark}>
               <FontAwesomeIcon icon={faBookmark} shake size="2xl"/>
-              </div>
+              </div>}
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   className="img-fluid rounded-start w-75"

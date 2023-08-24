@@ -70,7 +70,7 @@ function FavoriteMovies() {
         return (
             <div className="card  col-lg-3 col-md-5 " key={item.id}>
                 <div className={styles['icon-remember']} onClick={()=>handleRemoveRating({type:'REMOVE',favorite:false,id:item.id})}>
-                <DeleteOutlinedIcon sx={{fontSize:30,color:'red'}} />
+                <DeleteOutlinedIcon sx={{ fontSize:30,color:'red'}} className='cursor-pointer hover:bg-blue-200 rounded' />
                 </div>
               <Link href={`/movie/${item.id}`}>
             <div className={styles.slide}>

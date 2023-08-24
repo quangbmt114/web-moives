@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 function Sidebar() {
   const [movieTrending, setMovieTrending] = useState([]);
   const axios = require("axios");
@@ -38,11 +39,12 @@ function Sidebar() {
   if (movieTrending) {
     return (
       <div className="col-lg-3 col-md-9 mt-5 pt-3">
-        <h2 className="fs-3 fw-bold mb-2">Top Trending</h2>
+        <h2 className="fs-3 fw-bold mb-2">TOP TRENDING</h2>
         {movieTrending
           .filter((_, index) => index < 6)
           .map((item) => (
-            <div className="card mb-3" key={item.id}>
+            <Link href={`/movie/${item.id}`} key={item.id}>
+            <div className="card mb-3" >
               <div className="row g-0">
                 <div className="col-md-4">
                   <img
@@ -64,6 +66,7 @@ function Sidebar() {
                 </div>
               </div>
             </div>
+            </Link>
           ))}
       </div>
     );

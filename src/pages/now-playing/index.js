@@ -1,5 +1,7 @@
 import Pagination from '@/component/Pagination';
 import {useState,useEffect} from 'react'
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import styles from '../../component/ContentHome/ContentHome.module.css'
 function NowPlaying() {
@@ -33,7 +35,14 @@ function NowPlaying() {
   useEffect(() => {
     handleGetMovie()
   }, []);
-    return ( <div className="mt-5">
+    if(data.length===0){
+      return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>
+      <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row" >
+  <CircularProgress color="success" />
+  </Stack>
+    </div>)
+    }else{
+      return ( <div className="mt-5">
         <div className="d-flex flex-wrap gap-3 justify-content-around col-12 p-3">
       {data.map((item) => {
         return (
@@ -58,6 +67,7 @@ function NowPlaying() {
     </div>
         <Pagination onReload={handleGetMovie}/>
     </div> );
+    }
 }
 
 export default NowPlaying;

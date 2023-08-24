@@ -1,6 +1,8 @@
 import Pagination from '@/component/Pagination';
 import {useState,useEffect} from 'react'
 import { useRouter } from 'next/router';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import styles from '../../../component/ContentHome/ContentHome.module.css'
 function YearMovies() {
@@ -12,7 +14,6 @@ function YearMovies() {
     const axios = require('axios');
     const handleGetMovie = (e)=>{
         setPagination(e)
-        console.log(e);
         const options = {
             method: 'GET',
             url: `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${e}&primary_release_year=${yearId}&sort_by=popularity.desc`,
@@ -26,7 +27,6 @@ function YearMovies() {
             .request(options)
             .then(function (response) {
              setData(response.data.results)
-             console.log(response.data.results);
             })
             .catch(function (error) {
               console.error(error);
@@ -38,6 +38,13 @@ function YearMovies() {
   useEffect(() => {
     handleGetMovie()
   }, [yearId]);
+  if(data.length===0){
+    return(<div className='d-flex col-12 justify-center align-items-center  mt-5 pt-5' style={{height:'60vh'}}>
+      <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row" >
+  <CircularProgress color="success" />
+  </Stack>
+    </div>)
+  }else{
     return ( <div className="mt-5">
         <div className="d-flex flex-wrap gap-3 justify-content-around col-12 p-3">
       {data.map((item) => {
@@ -63,6 +70,7 @@ function YearMovies() {
     </div>
         <Pagination onReload={handleGetMovie}/>
     </div> );
+  }
 }
 
 export default YearMovies;

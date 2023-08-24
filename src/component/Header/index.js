@@ -29,8 +29,9 @@ function Header({ isCheck }) {
   };
   const dataYear = [{name:2016},{name:2017},{name:2018},{name:2019},{name:2020},{name:2021},{name:2022},{name:2023}]
   const handleRemoveCookie = () => {
-    handleReload();
     Cookies.remove("token");
+    handleReload();
+    
   };
   const handleReloadSearch = ()=>{
       router.push('/search')
@@ -88,8 +89,9 @@ function Header({ isCheck }) {
       data-bs-theme="light"
     >
       <Container>
-        <Navbar.Brand href="/">
-          <img src="/movie-32px.png" />
+        <Navbar.Brand href="/" className="d-flex fw-bold text-amber-500	">
+          <img src="/movie-32px.png" className="pr-2"/> {"  "}
+           Phim Mới
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
