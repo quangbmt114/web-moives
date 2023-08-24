@@ -18,7 +18,7 @@ export default function PopupAccount({onRemove}) {
       dispatch(uiAction.toggleLogout())
       localStorage.removeItem('id')
       onRemove()
-      router.push('/login')
+      router.reload('/login')
   };
   const handleRoutingDashboard = (e)=>{
     router.push(`${e}`)
