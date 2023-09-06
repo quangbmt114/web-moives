@@ -33,7 +33,7 @@ function Movies() {
     <div className="d-flex flex-wrap gap-3 justify-content-around col-12 p-3">
       {data.map((item) => {
         return (
-            <div className="card  col-2 " key={item.id}>
+            <div className="card  col-lg-2 col-md-3 col-sm-5 " key={item.id}>
               <Link href={`/movie/${item.id}`}>
             <div className={styles.slide}>
               <img

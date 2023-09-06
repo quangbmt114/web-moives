@@ -1,7 +1,7 @@
 import styles from "../ContentHome/ContentHome.module.css"
 
 function SlideMovie({item}) {
-    return (  <div className="col-2 card ">
+    return (  <div className="col-lg-2 col-md-3 col-sm-4 card ">
             <div className={styles.slide}>
             
               <img

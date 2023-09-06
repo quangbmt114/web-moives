@@ -150,7 +150,7 @@ function DetailPage() {
         </div>
         <section>
           <h2 className="p-2">Credits</h2>
-          <div className="col-12 p-2 mt-2 d-flex justify-content-around gap-1 card-body">
+          <div className="col-lg-12 col-md-12 col-sm-12 p-2 mt-2 d-flex flex-wrap justify-content-around gap-1 card-body">
             {similar
               .filter((_, index) => index < 5)
               .map((item, index) => (
